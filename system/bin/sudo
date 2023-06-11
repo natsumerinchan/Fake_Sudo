@@ -15,7 +15,7 @@ elif [ "$1" == "su" ]; then
     su
 elif [ "$1" == "-s" ] || [ "$1" == "--shell" ]; then
     su -s
-elif [ "$1" == "-i" ] ||[ "$1" == "--login" ]; then
+elif [ "$1" == "-i" ] || [ "$1" == "--login" ]; then
     su -l
 elif [ "$1" == "-v" ] || [ "$1" == "-V" ] || [ "$1" == "--version" ]; then
     su "$1"
