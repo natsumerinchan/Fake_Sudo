@@ -1,2 +1,2 @@
 # Fake_Sudo
- Use sudo on Android shell.
+ Use a fake sudo on Android shell.

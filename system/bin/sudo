@@ -4,14 +4,36 @@ if [ $# -eq 0 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     printf "usage: sudo <command> [options]\n"
     printf "usage: sudo [options]\n"
     printf "\nOptions:\n"
-    printf "     -h, --help\n"
-    printf "     -V, --version\n"
-    exit 
+    printf "    -e, --edit                    edit files instead of running a command\n"
+    printf "    -h, --help                    display this help message and exit\n"
+    printf "    -i, --login                   run login shell as the target user; a command may also be specified\n"
+    printf "    -s, --shell                   run shell as the target user; a command may also be specified\n"
+    printf "    -v, --version                 display version number and exit\n"
+    printf "    -V                            display version code and exit\n"
+    exit
 elif [ "$1" == "su" ]; then
     su
-elif [ "$1" == "-V" ] || [ "$1" == "--version" ]; then
-    su -v
+elif [ "$1" == "-s" ] || [ "$1" == "--shell" ]; then
+    su -s
+elif [ "$1" == "-i" ] ||[ "$1" == "--login" ]; then
+    su -l
+elif [ "$1" == "-v" ] || [ "$1" == "-V" ] || [ "$1" == "--version" ]; then
+    su "$1"
     exit
+elif [ "$1" == "-e" ] || [ "$1" == "--edit" ]; then
+    if [ -z "${2-}" ]; then
+        printf "usage: sudo -e^/--edit <filepath>\n"
+        exit
+    fi
+    if [ -e "/bin/nano" ]; then
+        export EDITOR=nano
+    elif [ -e "/bin/vi" ]; then
+        export EDITOR=vi
+    else
+        printf "sudo: "$1": Editor is not found.\n"
+        exit
+    fi
+    su -c ""$EDITOR" "$2""
 elif [ "${1#*-}" = "$1" ]; then
     su -c "$*"
 else
