@@ -1,15 +1,18 @@
 #!/bin/sh
 
 if [ $# -eq 0 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-    printf "usage: sudo <command> [options]\n"
+    printf "sudo - execute a command as another user\n"
+    printf "\nusage: sudo [command [arg ...]]\n"
     printf "usage: sudo [options]\n"
     printf "\nOptions:\n"
-    printf "    -e, --edit                    edit files instead of running a command\n"
-    printf "    -h, --help                    display this help message and exit\n"
-    printf "    -i, --login                   run login shell as the target user; a command may also be specified\n"
-    printf "    -s, --shell                   run shell as the target user; a command may also be specified\n"
-    printf "    -v, --version                 display version number and exit\n"
-    printf "    -V                            display version code and exit\n"
+    printf "  -e, --edit                    edit files instead of running a command\n"
+    printf "  -h, --help                    display this help message and exit\n"
+    printf "  -i, --login                   run login shell as the target user; a command\n"
+    printf "                                may also be specified\n"
+    printf "  -s, --shell                   run shell as the target user; a command may\n" 
+    printf "                                also be specified\n"
+    printf "  -v, --version                 display version number and exit\n"
+    printf "  -V                            display version code and exit\n"
     exit
 elif [ "$1" == "su" ]; then
     su
