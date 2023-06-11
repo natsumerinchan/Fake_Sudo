@@ -22,7 +22,7 @@ elif [ "$1" == "-v" ] || [ "$1" == "-V" ] || [ "$1" == "--version" ]; then
     exit
 elif [ "$1" == "-e" ] || [ "$1" == "--edit" ]; then
     if [ -z "${2-}" ]; then
-        printf "usage: sudo -e^/--edit <filepath>\n"
+        printf "usage: sudo "$1" <filepath>\n"
         exit
     fi
     if [ -e "/bin/nano" ]; then
