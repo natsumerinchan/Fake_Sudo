@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define VERSION "v1.0.0"
+#define VERSION "v1.0.1"
 
 static struct option long_options[] = {
     {"user", required_argument, NULL, 'u'},
@@ -45,7 +45,7 @@ char* join_args(int count, char** args) {
 }
 
 void print_help() {
-    printf("Android sudo wrapper for MagiskSU\n\n");
+    printf("Sudo for Android NDK\n\n");
     printf("Usage: sudo [options] [command]\n");
     printf("Options:\n");
     printf("  -u, --user=USER        run command as specified user (default: 0)\n");
@@ -62,6 +62,8 @@ void print_help() {
 
 int main(int argc, char* argv[]) {
     char* target_user = NULL;
+    char* primary_group = NULL;
+    char* supp_groups = NULL;
     char* command = NULL;
     char* shell = NULL;
     char* edit_file = NULL;
@@ -75,8 +77,8 @@ int main(int argc, char* argv[]) {
     while ((opt = getopt_long(argc, argv, "+u:g:G:s:ibEe:hV", long_options, NULL)) != -1) {
         switch (opt) {
         case 'u': target_user = optarg; break;
-        case 'g': /* TODO: Handle groups */ break;
-        case 'G': /* TODO: Handle supp groups */ break;
+        case 'g': primary_group = optarg; break;
+        case 'G': supp_groups = optarg; break;
         case 's': shell = optarg; break;
         case 'i': login = 1; break;
         case 'b': background = 1; break;
@@ -121,6 +123,17 @@ int main(int argc, char* argv[]) {
     int arg_count = 1;
     
     if (target_user) su_argv[arg_count++] = target_user;
+
+    if (primary_group) {
+        su_argv[arg_count++] = "--group";
+        su_argv[arg_count++] = primary_group;
+    }
+
+    if (supp_groups) {
+        su_argv[arg_count++] = "--supp-group";
+        su_argv[arg_count++] = supp_groups;
+    }
+
     if (preserve_env) su_argv[arg_count++] = "--preserve-environment";
     if (login) su_argv[arg_count++] = "-l";
     if (shell) {
