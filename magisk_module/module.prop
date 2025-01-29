@@ -1,0 +1,6 @@
+id=sudo-ndk
+name=Sudo for Android NDK
+version=v1.0.0
+versionCode=100
+author=natsumerinchan
+description=Use sudo on Android shell.

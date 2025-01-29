@@ -1,2 +1,4 @@
 
 *.zip
+src/libs
+src/obj
