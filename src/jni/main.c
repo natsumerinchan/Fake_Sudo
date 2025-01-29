@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define VERSION "1.0"
+#define VERSION "v1.0.0"
 
 static struct option long_options[] = {
     {"user", required_argument, NULL, 'u'},
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
         case 'E': preserve_env = 1; break;
         case 'e': edit_mode = 1; edit_file = optarg; break;
         case 'h': print_help(); return 0;
-        case 'V': printf("sudo-android %s\n", VERSION); return 0;
+        case 'V': printf("Sudo for Android NDK %s\n", VERSION); return 0;
         default:  return 1;
         }
     }
