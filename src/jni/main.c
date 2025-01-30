@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define VERSION "v1.0.1"
+#define VERSION "v1.0.2"
 
 static struct option long_options[] = {
     {"user", required_argument, NULL, 'u'},
