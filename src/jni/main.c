@@ -11,7 +11,6 @@
 static struct option long_options[] = {
     {"user", required_argument, NULL, 'u'},
     {"group", required_argument, NULL, 'g'},
-    {"supp-group", required_argument, NULL, 'G'},
     {"shell", required_argument, NULL, 's'},
     {"login", no_argument, NULL, 'i'},
     {"background", no_argument, NULL, 'b'},
@@ -50,7 +49,6 @@ void print_help() {
     printf("Options:\n");
     printf("  -u, --user=USER        run command as specified user (default: 0)\n");
     printf("  -g, --group=GRP        specify primary group\n");
-    printf("  -G, --supp-group=GRP   specify supplementary group\n");
     printf("  -s, --shell=SHELL      use specified shell\n");
     printf("  -i, --login            run login shell\n");
     printf("  -b, --background       run command in background\n");
@@ -63,7 +61,6 @@ void print_help() {
 int main(int argc, char* argv[]) {
     char* target_user = NULL;
     char* primary_group = NULL;
-    char* supp_groups = NULL;
     char* command = NULL;
     char* shell = NULL;
     char* edit_file = NULL;
@@ -74,11 +71,10 @@ int main(int argc, char* argv[]) {
     int opt;
 
     // Parse command line options
-    while ((opt = getopt_long(argc, argv, "+u:g:G:s:ibEe:hV", long_options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "+u:g:s:ibEe:hV", long_options, NULL)) != -1) {
         switch (opt) {
         case 'u': target_user = optarg; break;
         case 'g': primary_group = optarg; break;
-        case 'G': supp_groups = optarg; break;
         case 's': shell = optarg; break;
         case 'i': login = 1; break;
         case 'b': background = 1; break;
@@ -127,11 +123,6 @@ int main(int argc, char* argv[]) {
     if (primary_group) {
         su_argv[arg_count++] = "--group";
         su_argv[arg_count++] = primary_group;
-    }
-
-    if (supp_groups) {
-        su_argv[arg_count++] = "--supp-group";
-        su_argv[arg_count++] = supp_groups;
     }
 
     if (preserve_env) su_argv[arg_count++] = "--preserve-environment";
