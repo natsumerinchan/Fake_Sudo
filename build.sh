@@ -6,7 +6,20 @@ if [ "$1" = "clean" ];then
 fi
 
 (cd src && ndk-build)
-ARCHS=(arm arm64 x86 x86_64 riscv64)
+
+ARCHS="
+    arm
+    arm64
+    x86
+    x86_64
+    riscv64
+"
+test -d "magisk_module/bin" && rm -rf magisk_module/bin
+for ARCH in $ARCHS
+do
+    mkdir -p "magisk_module/bin/$ARCH"
+done
+
 cp README.md magisk_module/
 cp LICENSE magisk_module/
 cp src/libs/armeabi-v7a/sudo magisk_module/bin/arm

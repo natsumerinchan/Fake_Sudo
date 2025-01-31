@@ -18,7 +18,7 @@ jobs:
       with:
         ndk-version: r27c
         
-    - name: Build adb_root
+    - name: Build Sudo-NDK
       run: |
         chmod 777 ./build.sh
         ./build.sh
